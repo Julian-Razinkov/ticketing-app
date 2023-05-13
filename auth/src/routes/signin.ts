@@ -17,11 +17,11 @@ async (req:Request, res:Response) => {
   const {email, password} = req.body;
 
   const existingUser = await User.findOne({email});
-  if(!existingUser) throw new BadRequestError('Invalid credentials');
+  if(!existingUser) throw new BadRequestError('Invalid email');
 
   const isPasswordsMatch = await Password.compare(existingUser.password, password )
 
-  if(!isPasswordsMatch) throw new BadRequestError('Invalid credentials')
+  if(!isPasswordsMatch) throw new BadRequestError('Invalid password')
 
   const userJwt = jwt.sign({
     id: existingUser.id,
