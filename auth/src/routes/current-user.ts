@@ -1,6 +1,7 @@
 import express from 'express';
-import { currentUser } from '../middlewares/current-user'; 
-import { requireAuth } from '../middlewares/require-auth';
+//fix files path in common package.json
+import { currentUser } from '@razinkovtick/common'; 
+import { requireAuth } from '@razinkovtick/common';
 
 const router = express.Router();
 
