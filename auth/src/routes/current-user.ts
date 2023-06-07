@@ -1,5 +1,4 @@
 import express from 'express';
-//fix files path in common package.json
 import { currentUser } from '@razinkovtick/common'; 
 import { requireAuth } from '@razinkovtick/common';
 

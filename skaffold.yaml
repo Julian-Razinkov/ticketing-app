@@ -18,6 +18,14 @@ build:
       manual:
       - src: '**/*.js'
         dest: .
+  - image: username161632/tickets
+    context: tickets
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - src: 'src/*.js'
+        dest: .
   local:
     push: false
 manifests:

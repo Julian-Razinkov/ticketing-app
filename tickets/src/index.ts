@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 
-const start = async () => { 
+const start = async () => {
 
-  const PORT = 3000;
-  const URI = 'mongodb://auth-mongo-srv:27017/auth'
+  const PORT = 3001;
+  const URI = 'mongodb://tickets-mongo-srv:27017/tickets'
 
   if(!process.env.JWT_KEY)
     throw new Error("JWT secret must be defined");
