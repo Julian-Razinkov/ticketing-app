@@ -1,10 +1,9 @@
-import { Request, Response, Router} from 'express';
-import { requireAuth } from '@razinkovtick/common';
+import express, {Request, Response} from 'express';
 
-const router = Router();
+const router = express.Router()
 
-router.post('/api/tickets', requireAuth,  async (req:Request, res:Response) => {
-    res.status(200).send();
+router.post('/api/tickets', (req:Request, res:Response) =>{
+    res.status(202).send();
 });
 
-export {router as createTicketRouter} 
+export {router as createTicketRouter}

@@ -32,19 +32,19 @@ declare global {
 }
 
 global.signin = async () => {
-    // faking the signin in
-    const payload = {
-        email: 'hello@test.com',
-        password: 'password'
-    }
-
-
-    // generate jwt token const token = jwt.sign(payload, process.env.JWT)
-
-    // make a express session object const session = 
-
-    //encode it in base64 
-
-    //return cookie
+    const email = 'test@test.com';
+    const password = 'password';
+  
+    const response = await request(app)
+      .post('/api/users/signup')
+      .send({
+        email,
+        password,
+      })
+      .expect(201);
+  
+    const cookie = response.get('Set-Cookie');
+  
+    return cookie;
 
 }
