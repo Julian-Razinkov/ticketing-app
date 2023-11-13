@@ -2,6 +2,7 @@ import {MongoMemoryServer} from "mongodb-memory-server";
 import mongoose from "mongoose";
 import {app} from "../app";
 import request from 'supertest';
+import jwt from 'jsonwebtoken'
 
 let mongo:any;
 beforeAll(async () => {
@@ -31,17 +32,19 @@ declare global {
 }
 
 global.signin = async () => {
-    const email = 'test@test.com';
-    const password = 'password';
+    // faking the signin in
+    const payload = {
+        email: 'hello@test.com',
+        password: 'password'
+    }
 
-    const response = await request(app)
-        .post('/api/users/singin')
-        .send({
-            email,
-            password
-        })
-        .expect(200)
 
-    const cookie = response.get('Set-Cookie');
-    return cookie;
+    // generate jwt token const token = jwt.sign(payload, process.env.JWT)
+
+    // make a express session object const session = 
+
+    //encode it in base64 
+
+    //return cookie
+
 }
