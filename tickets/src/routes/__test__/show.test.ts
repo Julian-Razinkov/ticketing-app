@@ -1,9 +1,13 @@
-import request from 'supertest'
-import { app } from '../../app'
+import request from 'supertest';
+import { app } from '../../app';
+import mongoose from 'mongoose';
 
 it('if there is not ticket return 404', async () => {
+    //generating a valid id so mongoose doesnt trows an error that cannot be handled in my error handler
+    const id = new mongoose.Types.ObjectId().toHexString()
+
     await request(app)
-        .get('/api/tickets/gabagaba')
+        .get(`/api/tickets/${id}`)
         .send()
         .expect(404)
 })
