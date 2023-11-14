@@ -1,12 +1,10 @@
 import {MongoMemoryServer} from "mongodb-memory-server";
 import mongoose from "mongoose";
-import {app} from "../app";
-import request from 'supertest';
 import jwt from 'jsonwebtoken'
 
 let mongo:any;
 beforeAll(async () => {
-    process.env.JWT_KEY = 'hey';
+    process.env.jwt = 'asdf';
 
     mongo = await MongoMemoryServer.create();
     const mongoUri = mongo.getUri();
@@ -28,23 +26,18 @@ afterAll(async () => {
 });
 
 declare global {
-    var signin: () => Promise<string[]>;
+    var signin: () => string[];
 }
 
-global.signin = async () => {
-    const email = 'test@test.com';
-    const password = 'password';
-  
-    const response = await request(app)
-      .post('/api/users/signup')
-      .send({
-        email,
-        password,
-      })
-      .expect(201);
-  
-    const cookie = response.get('Set-Cookie');
-  
-    return cookie;
-
+global.signin = () => {
+    // build a payload
+    const jwtPayload = {
+        emai: 'test@test.com',
+        password: 'password'
+    }
+    const jwtToken = jwt.sign(jwtPayload, process.env.jwt!)
+    const session = {jwt: jwtToken}
+    const sessionJSON = JSON.stringify(session)
+    const base64 = Buffer.from(sessionJSON).toString('base64');
+    return [`session=${base64}`];
 }
