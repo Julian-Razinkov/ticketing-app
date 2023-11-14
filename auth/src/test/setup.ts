@@ -5,7 +5,7 @@ import request from 'supertest';
 
 let mongo:any;
 beforeAll(async () => {
-    process.env.JWT_KEY = 'hey';
+    process.env.jwt = 'asdf';
 
     mongo = await MongoMemoryServer.create();
     const mongoUri = mongo.getUri();

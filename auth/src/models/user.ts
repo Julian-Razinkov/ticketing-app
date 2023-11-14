@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required:true
-    }
+}
         
 }, {
     // Not a best aproachto write view related things in model, but it`ll do the job

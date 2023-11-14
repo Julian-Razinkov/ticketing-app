@@ -16,11 +16,11 @@ spec:
         - name: auth
           image: username161632/auth
           env: 
-            - name: JWT_KEY
+            - name: jwt
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
-                  key: JWT_KEY
+                  key: jwt
 ---
 apiVersion: v1
 kind: Service
