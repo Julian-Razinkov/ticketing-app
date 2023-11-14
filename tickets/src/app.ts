@@ -5,6 +5,7 @@ import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
 import { indexTicketRouter } from "./routes";
 import { currentUser } from "@razinkovtick/common";
+import { updateTicketRouter } from "./routes/update";
 
 
 const app = express();
@@ -21,4 +22,5 @@ app.use(currentUser);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
 app.use(indexTicketRouter);
+app.use(updateTicketRouter);
 export { app };
