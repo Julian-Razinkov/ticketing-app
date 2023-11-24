@@ -26,6 +26,14 @@ build:
       manual:
       - src: 'src/*.js'
         dest: .
+  - image: username161632/orders
+    context: orders
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - src: 'src/*.js'
+        dest: .
   local:
     push: false
 manifests:

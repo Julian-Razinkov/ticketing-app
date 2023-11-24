@@ -5,7 +5,7 @@ import { natsWrapper } from "./nats-wrapper";
 const start = async () => {
 
   const PORT = 3001;
-  const mongooseURI = 'mongodb://tickets-mongo-srv:27017/tickets';
+  const mongooseURI = 'mongodb://orders-mongo-srv:27017/orders';
 
   if(!process.env.jwt) throw new Error("JWT secret must be defined");
   if(!process.env.NATS_CLIENT_ID) throw new Error("nats client id must be defined");
