@@ -6,7 +6,7 @@ const start = async () => {
   const PORT = 3000;
   const URI = 'mongodb://auth-mongo-srv:27017/auth'
 
-  if(!process.env.JWT_KEY)
+  if(!process.env.jwt)
     throw new Error("JWT secret must be defined");
 
   try {

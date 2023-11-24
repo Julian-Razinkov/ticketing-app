@@ -4,7 +4,8 @@ import cookieSession from "cookie-session";
 import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
 import { indexTicketRouter } from "./routes";
-import { currentUser } from "@razinkovtick/common";
+//TODO fix the imports (deploy the common module to a npm and acces it from there )
+import { currentUser } from "../../common/src/middlewares/current-user";
 import { updateTicketRouter } from "./routes/update";
 
 
