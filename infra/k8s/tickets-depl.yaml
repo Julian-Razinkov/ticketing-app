@@ -15,7 +15,15 @@ spec:
       containers:
         - name: tickets
           image: username161632/tickets
-          env: 
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom: 
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'ticketing'   
             - name: jwt
               valueFrom:
                 secretKeyRef:

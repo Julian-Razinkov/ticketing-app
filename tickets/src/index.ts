@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { app } from "./app";
-import { nastWrapper } from "./nats-wrapper";
+import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
 
@@ -10,18 +10,24 @@ const start = async () => {
   const natsClientId = 'mustberandomstring';
   const natsUrl = 'http://nats-srv:4222'
 
-  if(!process.env.jwt)
-    throw new Error("JWT secret must be defined");
+  if(!process.env.jwt) throw new Error("JWT secret must be defined");
+  if(!process.env.NATS_CLIENT_ID) throw new Error("nats client id must be defined");
+  if(!process.env.NATS_URL) throw new Error("nats url must be defined");
+  if(!process.env.NATS_CLUSTER_ID) throw new Error("nats cluster id must be defined");
 
   try {
-    await nastWrapper.connect(natsClusterId, natsClientId, natsUrl)
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID, 
+      process.env.NATS_CLIENT_ID, 
+      process.env.NATS_URL
+    )
     //Graceful shutdown iplementation
-    nastWrapper.client.on('close', () => {
+    natsWrapper.client.on('close', () => {
       console.log('Nats connection is closed');
       process.exit();
     });
-    process.on('SIGINT', () => nastWrapper.client.close());
-    process.on('SIGTERM', () => nastWrapper.client.close());
+    process.on('SIGINT', () => natsWrapper.client.close());
+    process.on('SIGTERM', () => natsWrapper.client.close());
 
     await mongoose.connect(mongooseURI);
   } catch (error) {
