@@ -10,6 +10,7 @@ import { OrderStatus } from '../../../common/src/events/types/order-status'
 
 
 const router = Router()
+const newOrderService = new OrderService()
 
 router.post('/api/orders',
     requireAuth, 
@@ -22,6 +23,10 @@ router.post('/api/orders',
     ],
     validateRequest,
     async (req:Request, res:Response) => {
+        //potentiall refactor
+        //Add service, for each router, so that only thing router does
+        //its data validation and request handling
+        //And all logic is written in service (better architecture) 
         const {ticketId} = req.body
 
         const ticket = await Ticket.findById(ticketId);
