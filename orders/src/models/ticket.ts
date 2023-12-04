@@ -1,4 +1,6 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
+import { OrderStatus } from "../../../common/src/events/types/order-status";
+import { Order } from "./order";
 
 interface TicketAttrs{
     title: string,
@@ -7,7 +9,7 @@ interface TicketAttrs{
 
 interface TicketDoc extends mongoose.Document{
     title: string,
-    price: number
+    price: number,
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc>{
@@ -36,6 +38,7 @@ const ticketSchema = new mongoose.Schema({
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
     return new Ticket(attrs)
 }
+
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema)
 

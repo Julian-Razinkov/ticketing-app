@@ -4,13 +4,13 @@ import { validateRequest } from '../../../common/src/middlewares/validate-reques
 import {body} from 'express-validator'
 import mongoose from 'mongoose'
 import { Ticket } from '../models/ticket'
-import { Order } from '../models/order'
 import { BadRequestError, NotFoundError } from '@razinkovtick/common'
-import { OrderStatus } from '../../../common/src/events/types/order-status'
+import { isReserved } from '../jobs/reservation-check.job'
+
 
 
 const router = Router()
-const newOrderService = new OrderService()
+
 
 router.post('/api/orders',
     requireAuth, 
@@ -32,21 +32,11 @@ router.post('/api/orders',
         const ticket = await Ticket.findById(ticketId);
         if(!ticket) throw new NotFoundError()
 
-        //Make sure that our ticket is not reserved by other order
-        const order = await Order.findOne({
-            ticket: ticket,
-            status: {
-                $in: [
-                    OrderStatus.Created,
-                    OrderStatus.AwaitingPayment,
-                    OrderStatus.Complete
-                ]
-            }
-        });
-        //TODO: extract the reservation check logic into separate file
+        const isTicketReserved = await isReserved(ticket)
+
+        if(isTicketReserved) throw new BadRequestError('Ticket is already reserved')
         //TODO: write a service that is responsible for expiration (setExpiry date, checkExpiry date)
 
-        if(order) throw new BadRequestError('Ticket is already reserved')
 
         res.send({})
     })
