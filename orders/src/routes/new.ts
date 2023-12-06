@@ -6,7 +6,9 @@ import mongoose from 'mongoose'
 import { Ticket } from '../models/ticket'
 import { BadRequestError, NotFoundError } from '@razinkovtick/common'
 import { isReservedJob } from '../jobs/reservation-check.job'
-import { expiresAtJob } from '../jobs/expiary'
+import { expiresAtJob } from '../jobs/expiary.job.ts'
+import { Order } from '../models/order'
+import { OrderStatus } from '../../../common/src/events/types/order-status'
 
 
 
@@ -36,9 +38,19 @@ router.post('/api/orders',
         const isTicketReserved = await isReservedJob(ticket)
         if(isTicketReserved) throw new BadRequestError('Ticket is already reserved')
 
-        const expiriesAt = expiresAtJob()
-        
-        res.send({})
+        const expiresAt = expiresAtJob()
+
+        const order = Order.build({
+            userId: req.currentUser!.id,
+            status: OrderStatus.Created,
+            expiresAt,
+            ticket
+        })
+
+        await order.save()
+
+
+        res.status(201).send(order);
     })
 
 export {router as createOrdersRouter}
