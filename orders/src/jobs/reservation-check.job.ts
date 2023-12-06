@@ -3,7 +3,7 @@ import { OrderStatus } from "../../../common/src/events/types/order-status"
 import { TicketDoc } from "../models/ticket"
 
 
-const isReserved = async function(ticketDoc:TicketDoc):Promise<boolean>{
+const isReservedJob = async function(ticketDoc:TicketDoc):Promise<boolean>{
     const order = await Order.findOne({
         ticket: ticketDoc,
         status: {
@@ -19,4 +19,4 @@ const isReserved = async function(ticketDoc:TicketDoc):Promise<boolean>{
     return !!order 
 }
 
-export {isReserved}
+export {isReservedJob}

@@ -5,7 +5,8 @@ import {body} from 'express-validator'
 import mongoose from 'mongoose'
 import { Ticket } from '../models/ticket'
 import { BadRequestError, NotFoundError } from '@razinkovtick/common'
-import { isReserved } from '../jobs/reservation-check.job'
+import { isReservedJob } from '../jobs/reservation-check.job'
+import { expiresAtJob } from '../jobs/expiary'
 
 
 
@@ -32,12 +33,11 @@ router.post('/api/orders',
         const ticket = await Ticket.findById(ticketId);
         if(!ticket) throw new NotFoundError()
 
-        const isTicketReserved = await isReserved(ticket)
-
+        const isTicketReserved = await isReservedJob(ticket)
         if(isTicketReserved) throw new BadRequestError('Ticket is already reserved')
-        //TODO: write a service that is responsible for expiration (setExpiry date, checkExpiry date)
 
-
+        const expiriesAt = expiresAtJob()
+        
         res.send({})
     })
 
