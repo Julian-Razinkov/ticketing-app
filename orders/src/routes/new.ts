@@ -49,6 +49,7 @@ router.post('/api/orders',
 
         await order.save()
 
+        //TODO: publish an event
 
         res.status(201).send(order);
     })
