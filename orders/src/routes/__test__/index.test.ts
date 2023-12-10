@@ -1,6 +1,5 @@
 import request  from "supertest";
 import { app } from "../../app";
-import { Order } from "../../models/order";
 import { Ticket } from "../../models/ticket";
 
 const buildTicket = async () => {
@@ -55,5 +54,4 @@ it('returns a list of orders for a particular user', async () => {
     expect(response.body.length).toEqual(2);
     expect(response.body[0].id).toEqual(orderOne.id);
     expect(response.body[1].id).toEqual(orderTwo.id)
-
 })
