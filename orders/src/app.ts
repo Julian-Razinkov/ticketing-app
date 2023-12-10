@@ -6,7 +6,7 @@ import { showOrdersRouter } from "./routes/show";
 import { indexOrdersRouter } from "./routes";
 //TODO fix the imports (deploy the common module to a npm and acces it from there )
 import { currentUser } from "../../common/src/middlewares/current-user";
-import { deleteOrdersRouter } from "./routes/delete";
+import { deleteOrdersRouter } from "./routes/cancel";
 
 
 const app = express();
